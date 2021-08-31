@@ -52,7 +52,7 @@ const PizzaCard: React.FC = props => {
       <MotiImage
         from={{rotate: '100deg', opacity: 0, marginLeft: 500}}
         animate={{rotate: '0deg', opacity: 1, marginLeft: 0}}
-        transition={{type: 'timing', duration: 2000}}
+        transition={{type: 'timing', duration: 1500}}
         style={styles.pizzaImage}
         source={require('../../../assets/pizza_calabresa.png')}
       />
