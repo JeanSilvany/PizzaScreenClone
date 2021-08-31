@@ -22,7 +22,7 @@ const sizePizza = [
   },
 ];
 
-const PizzaCard: React.FC = () => {
+const PizzaCard: React.FC = props => {
   const [menu, setMenu] = useState(1);
   const [amount, setAmount] = useState(1);
 
