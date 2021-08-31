@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, StatusBar} from 'react-native';
 import BagFooter from './src/page/components/BagFooter';
 import HeaderBar from './src/page/components/HeaderBar';
 import PizzaCard from './src/page/components/PizzaCard';
@@ -17,11 +17,14 @@ const PizzaScreenClone: React.FC = () => {
   };
 
   return (
-    <View style={{flex: 1, padding: 18, backgroundColor: '#fff'}}>
-      <HeaderBar data={data} />
-      <PizzaCard data={data} />
-      <BagFooter />
-    </View>
+    <>
+      <StatusBar backgroundColor={'white'} barStyle={'dark-content'} />
+      <View style={{flex: 1, padding: 18, backgroundColor: '#fff'}}>
+        <HeaderBar data={data} />
+        <PizzaCard data={data} />
+        <BagFooter />
+      </View>
+    </>
   );
 };
 
