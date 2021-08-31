@@ -1,106 +1,88 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Image, TouchableOpacity, Text} from 'react-native';
-
 import Icon from 'react-native-vector-icons/Ionicons';
+import {styles} from './styles';
 
-const PizzaCard: React.FC = () => {
+const sizePizza = [
+  {
+    id: 1,
+    size: 'S',
+    value: 7.5,
+  },
+  {
+    id: 2,
+    size: 'M',
+    value: 10.0,
+  },
+  {
+    id: 3,
+    size: 'L',
+    value: 12.5,
+  },
+];
+
+const PizzaCard: React.FC = props => {
+  const [menu, setMenu] = useState(1);
+  const [amount, setAmount] = useState(1);
+
+  const handleIncrement = () => {
+    setAmount(amount + 1);
+  };
+
+  const handleDecrement = () => {
+    if (amount > 1) {
+      setAmount(amount - 1);
+    }
+  };
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={styles.container}>
       <Image
-        style={{
-          height: 250,
-          width: 300,
-          alignSelf: 'center',
-        }}
+        style={styles.pizzaImage}
         source={require('../../../assets/pizza_calabresa.png')}
       />
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{fontSize: 20}}>Small size 6 inch</Text>
-        <Text style={{fontSize: 26, fontWeight: 'bold', marginVertical: 5}}>
-          $7.50
-        </Text>
+        {sizePizza.map((e, index) =>
+          e.id === menu ? (
+            <Text
+              style={{fontSize: 26, fontWeight: 'bold', marginVertical: 5}}
+              key={`value-${index}`}>
+              ${(e.value * amount).toFixed(2)}
+            </Text>
+          ) : null,
+        )}
       </View>
       <View style={{flexDirection: 'row', marginVertical: 15}}>
-        <TouchableOpacity
-          style={{
-            height: 55,
-            width: 55,
-            backgroundColor: '#ffd35a',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginHorizontal: 10,
-            borderRadius: 10,
-          }}>
-          <Text style={{fontSize: 20, fontWeight: '500'}}>S</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            height: 55,
-            width: 55,
-            backgroundColor: '#f6f6f6',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginHorizontal: 10,
-            borderRadius: 10,
-          }}>
-          <Text style={{fontSize: 20, fontWeight: '500', color: '#838081'}}>
-            M
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            height: 55,
-            width: 55,
-            backgroundColor: '#f6f6f6',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginHorizontal: 10,
-            borderRadius: 10,
-          }}>
-          <Text style={{fontSize: 20, fontWeight: '500', color: '#838081'}}>
-            L
-          </Text>
-        </TouchableOpacity>
+        {sizePizza.map((e, index) =>
+          e.id === menu ? (
+            <TouchableOpacity
+              key={`size-${index}`}
+              onPress={() => setMenu(e.id)}
+              style={styles.activeBox}>
+              <Text style={{fontSize: 20, fontWeight: '500'}}>{e.size}</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              key={`size-${index}`}
+              onPress={() => setMenu(e.id)}
+              style={styles.disabledBox}>
+              <Text style={{fontSize: 20, fontWeight: '500'}}>{e.size}</Text>
+            </TouchableOpacity>
+          ),
+        )}
       </View>
       <View
         style={{
           flexDirection: 'row',
           marginVertical: 10,
         }}>
-        <TouchableOpacity
-          style={{
-            height: 45,
-            width: 45,
-            backgroundColor: '#f6f6f6',
-            marginHorizontal: 5,
-            borderRadius: 10,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+        <TouchableOpacity style={styles.removeBox} onPress={handleDecrement}>
           <Icon name="remove" size={25} color={'#000'} />
         </TouchableOpacity>
-        <View
-          style={{
-            height: 45,
-            width: 45,
-            backgroundColor: '#fff',
-            marginHorizontal: 5,
-            borderRadius: 10,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text style={{fontSize: 25}}>1</Text>
+        <View style={styles.amountBox}>
+          <Text style={{fontSize: 25}}>{amount}</Text>
         </View>
-        <TouchableOpacity
-          style={{
-            height: 45,
-            width: 45,
-            backgroundColor: '#ffd35a',
-            marginHorizontal: 5,
-            borderRadius: 10,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+        <TouchableOpacity style={styles.addBox} onPress={handleIncrement}>
           <Icon name="add-outline" size={25} color={'#000'} />
         </TouchableOpacity>
       </View>
