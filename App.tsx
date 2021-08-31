@@ -21,7 +21,7 @@ const PizzaScreenClone: React.FC = () => {
       <StatusBar backgroundColor={'white'} barStyle={'dark-content'} />
       <View style={{flex: 1, padding: 18, backgroundColor: '#fff'}}>
         <HeaderBar data={data} />
-        <PizzaCard data={data} />
+        <PizzaCard />
         <BagFooter />
       </View>
     </>
