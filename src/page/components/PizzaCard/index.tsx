@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, Image, TouchableOpacity, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {styles} from './styles';
+import {MotiImage, useAnimationState, MotiText} from 'moti';
 
 const sizePizza = [
   {
@@ -21,6 +22,17 @@ const sizePizza = [
   },
 ];
 
+const toogleAmount = () => {
+  return useAnimationState({
+    from: {
+      scale: 0.9,
+    },
+    to: {
+      scale: 1,
+    },
+  });
+};
+
 const PizzaCard: React.FC = props => {
   const [menu, setMenu] = useState(1);
   const [amount, setAmount] = useState(1);
@@ -34,21 +46,34 @@ const PizzaCard: React.FC = props => {
       setAmount(amount - 1);
     }
   };
+
   return (
     <View style={styles.container}>
-      <Image
+      <MotiImage
+        from={{rotate: '100deg', opacity: 0, marginLeft: 500}}
+        animate={{rotate: '0deg', opacity: 1, marginLeft: 0}}
+        transition={{type: 'timing', duration: 2000}}
         style={styles.pizzaImage}
         source={require('../../../assets/pizza_calabresa.png')}
       />
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{fontSize: 20}}>Small size 6 inch</Text>
+      <View>
         {sizePizza.map((e, index) =>
           e.id === menu ? (
-            <Text
-              style={{fontSize: 26, fontWeight: 'bold', marginVertical: 5}}
+            <View
+              style={{justifyContent: 'center', alignItems: 'center'}}
               key={`value-${index}`}>
-              ${(e.value * amount).toFixed(2)}
-            </Text>
+              <Text style={{fontSize: 20}}>
+                Small size {e.id == 1 ? 6 : e.id == 2 ? 8 : 10} inch
+              </Text>
+              <MotiText
+                from={{scale: 0.9}}
+                animate={{scale: 1}}
+                transition={{type: 'spring'}}
+                style={{fontSize: 26, fontWeight: 'bold', marginVertical: 5}}
+                key={`value-${index}`}>
+                ${(e.value * amount).toFixed(2)}
+              </MotiText>
+            </View>
           ) : null,
         )}
       </View>
@@ -66,7 +91,9 @@ const PizzaCard: React.FC = props => {
               key={`size-${index}`}
               onPress={() => setMenu(e.id)}
               style={styles.disabledBox}>
-              <Text style={{fontSize: 20, fontWeight: '500'}}>{e.size}</Text>
+              <Text style={{fontSize: 20, fontWeight: '500', color: '#838081'}}>
+                {e.size}
+              </Text>
             </TouchableOpacity>
           ),
         )}
