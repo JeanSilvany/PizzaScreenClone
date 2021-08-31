@@ -22,17 +22,6 @@ const sizePizza = [
   },
 ];
 
-const toogleAmount = () => {
-  return useAnimationState({
-    from: {
-      scale: 0.9,
-    },
-    to: {
-      scale: 1,
-    },
-  });
-};
-
 const PizzaCard: React.FC = props => {
   const [menu, setMenu] = useState(1);
   const [amount, setAmount] = useState(1);
